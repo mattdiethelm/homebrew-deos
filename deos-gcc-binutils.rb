@@ -6,6 +6,8 @@ class DeosGccBinutils < Formula
   version "2.21.1"
   sha1 "525255ca6874b872540c9967a1d26acfbc7c8230"
 
+  depends_on "gnu-sed" => :build
+
   bottle do
     root_url "http://localhost"
     revision 1
