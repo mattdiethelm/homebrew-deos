@@ -6,6 +6,12 @@ class DeosGccBinutils < Formula
   version "2.21.1"
   sha1 "525255ca6874b872540c9967a1d26acfbc7c8230"
 
+  bottle do
+    root_url "http://localhost"
+    revision 1
+    sha1 "f35356abad64fd58b84d87b098a0e510e574baed" => :yosemite
+  end
+
   keg_only "We need Deos gcc tools only when building Deos apps."
 
   # TODO: What dependencies should be listed here?
