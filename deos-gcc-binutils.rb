@@ -2,10 +2,13 @@ require 'formula'
 
 class DeosGccBinutils < Formula
   homepage ""
-  url "http://ftp.gnu.org/gnu/binutils/binutils-2.21.1.tar.bz2"
+  url "http://localhost/binutils-2.21.1.tar.bz2"
   version "2.21.1"
   sha1 "525255ca6874b872540c9967a1d26acfbc7c8230"
 
+  # {prefix}/opt/gnu-sed/bin will get added to PATH used when
+  # install() runs.  That's a Good Thing as part of our build from
+  # source needs gsed rather than OS X sed.
   depends_on "gnu-sed" => :build
 
   bottle do
@@ -16,17 +19,12 @@ class DeosGccBinutils < Formula
 
   keg_only "We need Deos gcc tools only when building Deos apps."
 
-  # TODO: What dependencies should be listed here?
-
   # binutils-2.21.1 invokes 'sed' using constructs not compatible with
   # the Mac sed variant.  We patch the affected invocations to use
   # 'gsed' instead.
   #
   # The 'patch' function will apply the patch that resides after the
   # __END__ statement below.
-  #
-  # Precondtitions:
-  #  - 'gsed' is installed at /usr/local/bin.
   patch :DATA
   
   @@CROSS_TARGETS = %w[ arm-eabi i686-pc-elf mips-elf powerpc-motorola-elf ]
@@ -41,7 +39,7 @@ class DeosGccBinutils < Formula
       system "./configure", "--disable-nls", "--target=#{target}", "--prefix=#{prefix}"
       system "make", "all", "ERROR_ON_WARNING=no"
       system "make", "install"
-
+      
       # Make another inventory of all files and directories.
       after = Dir.glob(File.join("**","*"))
 
@@ -71,7 +69,7 @@ diff -rupN binutils-2.21.1/binutils/Makefile.in binutils-2.21.1.patched/binutils
  
  embedspu: embedspu.sh Makefile
 -	sed "/^program_transform_name=/cprogram_transform_name=$(program_transform_name)" < $< > $@
-+	/usr/local/bin/gsed "/^program_transform_name=/cprogram_transform_name=$(program_transform_name)" < $< > $@
++	gsed "/^program_transform_name=/cprogram_transform_name=$(program_transform_name)" < $< > $@
  	chmod a+x $@
  
  # We need these for parallel make.
