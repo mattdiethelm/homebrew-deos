@@ -1,5 +1,3 @@
-require 'formula'
-
 class DeosGccBinutils < Formula
   homepage ""
   url "http://localhost/binutils-2.21.1.tar.bz2"
