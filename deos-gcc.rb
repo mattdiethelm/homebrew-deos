@@ -17,7 +17,7 @@ class DeosGcc < Formula
   #keg_only "We need Deos gcc tools only when building Deos apps."
 
   def install
-    system "make", "binaries" #TODO Set PREFIX!
+    system "make", "binaries", "PREFIX=#{prefix}"
   end
 
   test do
