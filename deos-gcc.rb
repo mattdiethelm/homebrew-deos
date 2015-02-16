@@ -1,6 +1,6 @@
 class DeosGcc < Formula
   homepage ""
-  url "http://localhost/deos-gcc.tar.bz2"
+  url "http://localhost/deos-gcc-4.6.1.tar.bz2"
   version "4.6.1"
   sha1 "7774789818fac99122a3cc92c76f0b016fa9428d"
 
@@ -14,7 +14,11 @@ class DeosGcc < Formula
   depends_on "mpfr" => :build
   depends_on "libmpc" => :build
   
-  #keg_only "We need Deos gcc tools only when building Deos apps."
+  bottle do
+    root_url "http://localhost"
+    revision 1
+    sha1 "a0fa862bf4bd1a3388d961f6bc145e98e604b5bc" => :yosemite
+  end
 
   def install
     system "make", "binaries", "PREFIX=#{prefix}"
