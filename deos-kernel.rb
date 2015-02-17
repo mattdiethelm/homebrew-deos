@@ -4,9 +4,23 @@ class DeosKernel < Formula
   version "8.3.0-2"
   sha1 "2e8be75d713e691ee8a694951b78eb53633d18c9"
 
+  keg_only "Useful install location is still TBD."
+
+  #def desk
+  #  Pathname.new("#{HOMEBREW_PREFIX}/desk-homebrew")
+  #end
+  #def deskInclude; desk+'include' end
+  
+  #class DeosKeg < Keg
+  #end
+
   def install
     prefix.install Dir["desk/*"]
+    #DeosKeg.new(prefix).link(OpenStruct.new)    
+    #(HOMEBREW_PREFIX/"desk-matt/include").install_symlink Dir.glob("#{prefix}/include/*")
+    #Pathname.new("#{HOMEBREW_PREFIX}/desk-homebrew").install Dir["desk/*"]
   end
+
 
   test do
     # `test do` will create, run in and delete a temporary directory.
