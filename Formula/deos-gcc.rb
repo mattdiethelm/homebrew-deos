@@ -2,7 +2,7 @@ class DeosGcc < Formula
   homepage ""
   url "http://localhost/deos-gcc-4.6.1.tar.bz2"
   version "4.6.1"
-  sha1 "7774789818fac99122a3cc92c76f0b016fa9428d"
+  sha256 "558a555310fe2748087ac18cb3c9a6f6284654ff50f47b0265ced1d4f8bd6264"
 
   # {prefix}/opt/gnu-sed/bin will get added to PATH used when
   # install() runs.  That's a Good Thing as part of our build from
@@ -17,7 +17,7 @@ class DeosGcc < Formula
   bottle do
     root_url "http://localhost"
     revision 1
-    sha1 "a0fa862bf4bd1a3388d961f6bc145e98e604b5bc" => :yosemite
+    sha256 "e35fcc531ea0d2667d08691dd4f5307e2edd5859cb9aae0fab400cd9e79a2591" => :yosemite
   end
 
   def install
