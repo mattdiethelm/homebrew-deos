@@ -1,19 +1,14 @@
 class DeosBinutilsGcc461 < Formula
   desc "FSF Binutils for Deos development using GCC 4.6.1."
-  homepage ""
   url "https://ftp.gnu.org/gnu/binutils/binutils-2.21.1.tar.bz2"
-  mirror "http://localhost/binutils-2.21.1.tar.gz"
+  mirror "http://localhost/binutils-2.21.1.tar.bz2"
   sha256 "cdecfa69f02aa7b05fbcdf678e33137151f361313b2f3e48aba925f64eabf654"
 
   depends_on "gnu-sed" => :build
-  depends_on "wget" => :build
-  depends_on "gmp" => :build
-  depends_on "mpfr" => :build
-  depends_on "libmpc" => :build
 
   bottle do
     root_url "http://localhost"
-    sha256 "d1f3c9f4e24d7813523a289f506212db19ec97e5829d5c6b205fdcfb37529ca5" => :sierra
+    sha256 "2bda351a1a2d35408bfd220c0fe60e86a05378553d8629d33af7cb5212cb1f0e" => :sierra
   end
 
   # Binutils makefile expects GNU sed syntax not supported by macOS
@@ -26,13 +21,20 @@ class DeosBinutilsGcc461 < Formula
   # Build and install a binutils instance for each target.
   def install
     for t in CROSS_TARGETS
-      system "mkdir", "#{t}"
-      system "cd #{t}; ../configure --srcdir=../ --target=#{t} --prefix=#{prefix} --disable-nls; make all ERROR_ON_WARNING=no; make install"
+      mkdir "#{t}" do
+        system "../configure",
+               "--srcdir=../",
+               "--target=#{t}",
+               "--prefix=#{prefix}",
+               "--disable-nls"
+        system "make", "all", "ERROR_ON_WARNING=no"
+        system "make", "install"
+      end
     end
   end
 
   test do
-    #We assume binutils built successfully if each target's linker can be invoked.
+    #We assume build was successful if each target's linker can be invoked.
     test_string = ""
     CROSS_TARGETS.each { | t | test_string << "#{bin}/#{t}-ld --version; "}
     system test_string
