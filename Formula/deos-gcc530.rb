@@ -6,6 +6,9 @@ class DeosGcc530 < Formula
 
   depends_on "wget" => :build
   depends_on "deos-binutils-gcc530" => :build
+  depends_on "gmp"
+  depends_on "libmpc"
+  depends_on "mpfr"
   
   bottle do
     root_url "http://localhost"
@@ -31,6 +34,9 @@ class DeosGcc530 < Formula
                "--prefix=#{prefix}",
                "--disable-nls",
                "--disable-multilib",
+               "--with-gmp=#{Formula["gmp"].opt_prefix}",
+               "--with-mpfr=#{Formula["mpfr"].opt_prefix}",
+               "--with-mpc=#{Formula["libmpc"].opt_prefix}",
                "--enable-languages=c,c++",
                "--without-headers",
                "--with-pkgversion=DDCI_5.3.0"
